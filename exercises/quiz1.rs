@@ -10,10 +10,17 @@
 // Write a function that calculates the price of an order of apples given
 // the quantity bought. No hints this time!
 
-// I AM NOT DONE
 
 // Put your function here!
-// fn calculate_price_of_apples {
+const NORMAL_APPLE_COST: i32 = 2;
+const DISCOUNT_APPLE_COST: i32 = 1;
+fn calculate_price_of_apples(apple_amount: i32) -> i32 {
+    if apple_amount > 40 {
+        apple_amount * DISCOUNT_APPLE_COST
+    } else {
+        apple_amount * NORMAL_APPLE_COST
+    }
+}
 
 // Don't modify this function!
 #[test]
