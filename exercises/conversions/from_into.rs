@@ -3,6 +3,9 @@
 // You can read more about it at https://doc.rust-lang.org/std/convert/trait.From.html
 // Execute `rustlings hint from_into` or use the `hint` watch subcommand for a hint.
 
+
+use std::str::FromStr;
+
 #[derive(Debug)]
 struct Person {
     name: String,
@@ -37,10 +40,28 @@ impl Default for Person {
 
 // I AM NOT DONE
 
-impl From<&str> for Person {
-    fn from(s: &str) -> Person {
+trait Valid {
+    fn validate(self, condition: bool) -> Result<Self, ()> where Self: Sized {
+        if condition { Ok(self) } else { Err(()) }
     }
 }
+impl<T> Valid for T where T: Sized {}
+impl FromStr for Person {
+    type Err = ();
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let (name, age) = s.split_once(',').ok_or(())?;
+        let name = name.to_owned().validate(!name.is_empty())?;
+        let age = age.parse().map_err(|_| ())?;
+
+        Ok(Person { name, age })
+    }
+}
+impl From<&str> for Person {
+    fn from(s: &str) -> Self {
+        s.parse().unwrap_or_default()
+    }
+}
+
 
 fn main() {
     // Use the `from` function
