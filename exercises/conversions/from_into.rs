@@ -3,7 +3,6 @@
 // You can read more about it at https://doc.rust-lang.org/std/convert/trait.From.html
 // Execute `rustlings hint from_into` or use the `hint` watch subcommand for a hint.
 
-
 use std::str::FromStr;
 
 #[derive(Debug)]
@@ -37,8 +36,6 @@ impl Default for Person {
 // 5. Extract the other element from the split operation and parse it into a `usize` as the age
 // If while parsing the age, something goes wrong, then return the default of Person
 // Otherwise, then return an instantiated Person object with the results
-
-// I AM NOT DONE
 
 trait Valid {
     fn validate(self, condition: bool) -> Result<Self, ()> where Self: Sized {

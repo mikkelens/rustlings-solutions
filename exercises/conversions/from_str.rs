@@ -7,6 +7,7 @@
 // Execute `rustlings hint from_str` or use the `hint` watch subcommand for a hint.
 
 use std::num::ParseIntError;
+use std::ptr::null;
 use std::str::FromStr;
 
 #[derive(Debug, PartialEq)]
@@ -46,6 +47,9 @@ enum ParsePersonError {
 impl FromStr for Person {
     type Err = ParsePersonError;
     fn from_str(s: &str) -> Result<Person, Self::Err> {
+        if s.len() == 0 { return ParsePersonError::BadLen; }
+        let split_data = s.split_once()
+        if name.is_empty() { return ParsePersonError::NoName; }
     }
 }
 
