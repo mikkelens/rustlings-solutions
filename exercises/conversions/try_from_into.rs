@@ -6,6 +6,7 @@
 // Execute `rustlings hint try_from_into` or use the `hint` watch subcommand for a hint.
 
 use std::convert::{TryFrom, TryInto};
+use std::ops::{RangeInclusive};
 
 #[derive(Debug, PartialEq)]
 struct Color {
@@ -23,7 +24,6 @@ enum IntoColorError {
     IntConversion,
 }
 
-// I AM NOT DONE
 
 // Your task is to complete this implementation
 // and return an Ok result of inner type Color.
@@ -38,6 +38,11 @@ enum IntoColorError {
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = IntoColorError;
     fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
+        Ok(Color {
+            red: tuple.0.to_u8_color()?,
+            green: tuple.1.to_u8_color()?,
+            blue: tuple.2.to_u8_color()?
+        })
     }
 }
 
@@ -45,6 +50,11 @@ impl TryFrom<(i16, i16, i16)> for Color {
 impl TryFrom<[i16; 3]> for Color {
     type Error = IntoColorError;
     fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
+        Ok(Color {
+            red: arr[0].to_u8_color()?,
+            green: arr[1].to_u8_color()?,
+            blue: arr[2].to_u8_color()?
+        })
     }
 }
 
@@ -52,6 +62,22 @@ impl TryFrom<[i16; 3]> for Color {
 impl TryFrom<&[i16]> for Color {
     type Error = IntoColorError;
     fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
+        if slice.len() != 3 { return Err(IntoColorError::BadLen); }
+        Ok(Color {
+            red: slice[0].to_u8_color()?,
+            green: slice[1].to_u8_color()?,
+            blue: slice[2].to_u8_color()?
+        })
+    }
+}
+
+const VALID_I16_RANGE: RangeInclusive<i16> = 0..=255;
+trait U8ColorParsable {
+    fn to_u8_color(self) -> Result<u8, IntoColorError> where Self: Sized;
+}
+impl U8ColorParsable for i16 {
+    fn to_u8_color(self) -> Result<u8, IntoColorError> {
+        if VALID_I16_RANGE.contains(&self) { Ok(self as u8) } else { Err(IntoColorError::IntConversion) }
     }
 }
 

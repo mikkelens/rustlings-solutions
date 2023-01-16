@@ -3,7 +3,6 @@
 // and https://doc.rust-lang.org/std/convert/trait.AsMut.html, respectively.
 // Execute `rustlings hint as_ref_mut` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
 
 // Obtain the number of bytes (not characters) in the given argument.
 // TODO: Add the AsRef trait appropriately as a trait bound.
@@ -19,9 +18,9 @@ fn char_counter<T: AsRef<str>>(arg: T) -> usize {
 
 // Squares a number using as_mut().
 // TODO: Add the appropriate trait bound.
-fn num_sq<T: AsMut<Box<u32>>>(arg: &mut T) {
+fn num_sq<T: AsMut<u32> + AsRef<u32>>(arg: &mut T) {
     // TODO: Implement the function body.
-    arg = 2 * arg;
+    *arg.as_mut() *= *arg.as_ref();
 }
 
 #[cfg(test)]
