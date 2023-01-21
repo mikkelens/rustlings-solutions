@@ -1,2 +1,2 @@
 # rustlings-solutions
-I want to complete all the rustlings challenges
+Rustlings fork where I have solved all the exercises.
